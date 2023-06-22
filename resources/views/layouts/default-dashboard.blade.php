@@ -7,9 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>{{$title}}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">  
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{{asset('vendor/sb-admin/css/styles.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
@@ -55,12 +53,12 @@
                             @if (Auth::user()->role_id == 3)
                                 <a  @if(request()->route()->uri == 'daftar-surat-izin') class="nav-link  active" @else class="nav-link" @endif href="/daftar-surat-izin">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    Daftar Surat Izin <span class="badge text-bg-secondary" style="margin-left: 30px;">{{$countSuratIzin}}</span>
+                                    Daftar Surat Izin <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>
                                 </a>
                                 
                             @endif
 
-                                <a @if(request()->route()->uri == 'surat-izin') class="nav-link active" @else class="nav-link" @endif href="surat-izin">
+                                <a @if(request()->route()->uri == 'surat-izin') class="nav-link active" @else class="nav-link" @endif href="/surat-izin">
                                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                                     Surat Izin
                                 </a>
@@ -113,65 +111,12 @@
             </div>
         </div>
         @include('sweetalert::alert')
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/sb-admin/js/scripts.js')}}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/sb-admin/assets/demo/chart-area-demo.js')}}"></script>
         <script src="{{asset('vendor/sb-admin/assets/demo/chart-bar-demo.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/sb-admin/js/datatables-simple-demo.js')}}"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-
-        <script type="text/javascript">
-    
-            $('.show_confirm').click(function(event) {
-                var form =  $(this).closest("form");
-                var name = $(this).data("name");
-                event.preventDefault();
-                swal({
-                    title: `Apakah anda yakin?`,
-                    text: "Jika kamu menghapus data ini, data akan terhapus selamanya.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                })
-                .then((willDelete) => {
-                if (willDelete) {
-                    form.submit();
-                }
-                });
-            });
-        
-    </script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-        $( "#confirm_delete" ).submit(function( event ) {
-            event.preventDefault();
-            swal({
-                title: 'Are you sure?',
-                text: "Please click confirm to delete this item",
-                type: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-                confirmButtonClass: 'btn btn-success',
-                cancelButtonClass: 'btn btn-danger',
-                buttonsStyling: true
-            }).then(function() {
-                    $("#confirm_delete").off("submit").submit();
-            }, function(dismiss) {
-                // dismiss can be 'cancel', 'overlay',
-                // 'close', and 'timer'
-                if (dismiss === 'cancel') {
-                    swal('Cancelled', 'Delete Cancelled :)', 'error');
-                }
-            })
-        });
-    });
-</script>
-        
     </body>
 </html>

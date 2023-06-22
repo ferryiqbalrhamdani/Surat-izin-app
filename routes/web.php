@@ -57,6 +57,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('surat-izin', [AdminController::class, 'suratIzin']);
         Route::get('form-izin', [AdminController::class, 'formIzin']);
         Route::post('form-izin', [AdminController::class, 'formIzinAction']);
+        Route::get('cetak-pdf', [PdfController::class, 'cetakPDF']);
     });
 
     Route::middleware(['role:3'])->group(function () {

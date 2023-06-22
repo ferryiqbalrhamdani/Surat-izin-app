@@ -76,7 +76,7 @@
                                             <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                         @endif
                                         @if($s->status == 1)
-                                            <a href="/download-pdf" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
+                                            <a href="/cetak-pdf" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
                                         @endif
                                     </td>
                                 </tr>
