@@ -37,7 +37,12 @@
                         <i class="fas fa-table me-1"></i>
                         Data Surat Izin
                     </div>
-                    
+                    <div class="col d-flex justify-content-end">
+                        <!-- Button trigger modal -->
+                        <a href="/cetak-pdf" target="_blank" class="btn btn-success btn-sm">
+                            Download data bulan ini
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="card-body">
@@ -72,7 +77,7 @@
                                     </td>
                                     <td>
                                         @if($s->status == 0)
-                                            <a href="" class="btn btn-sm btn-primary">Ubah</a>
+                                            <a href="/surat-izin/ubah/{{$s->id}}" class="btn btn-sm btn-primary">Ubah</a>
                                             <a href="" class="btn btn-sm btn-danger">Hapus</a>
                                         @endif
                                         @if($s->status == 1)

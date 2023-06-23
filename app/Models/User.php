@@ -49,4 +49,13 @@ class User extends Authenticatable
     protected $attributes = [
         'role_id' => 2
     ];
+
+    public function hasRole($role)
+    {
+        // check param $role dengan field role_id
+        if ($role == $this->role_id) {
+            return true;
+        }
+        return false;
+    }
 }

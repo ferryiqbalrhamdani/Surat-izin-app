@@ -5,6 +5,7 @@ use App\Http\Controllers\AtasanController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\SuratIzinController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -58,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('form-izin', [AdminController::class, 'formIzin']);
         Route::post('form-izin', [AdminController::class, 'formIzinAction']);
         Route::get('cetak-pdf', [PdfController::class, 'cetakPDF']);
+        Route::get('surat-izin/ubah/{id}', [SuratIzinController::class, 'update']);
     });
 
     Route::middleware(['role:3'])->group(function () {

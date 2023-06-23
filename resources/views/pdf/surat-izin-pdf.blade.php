@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Surat Izin - PDF</title>
     <style>
         body{
             font-family: 'Poppins', sans-serif; !important
@@ -36,28 +36,27 @@
 </head>
 <body >
     <h2 class="text-center">SURAT IZIN</h2>
-    <hr class="border border-danger border-2 opacity-50">
+    <p style="font-size: 12px; text-align: right">Periode: {{$thisMonth}}</p>
     @foreach ($user as $u)
-        <div class="row" style="font-size: 10px">
+    <hr class="border border-danger border-2 opacity-50">
+        <div class="row" style="font-size: 12px">
             <div class="col">
                 <table style="width: 100%">
                     <tbody>
                         <tr>
-                            <td>Nama</td>
+                            <td width="15%">Nama</td>
                             <td style="text-transform: capitalize">: {{$u->name}}</td>
-                            <td style="width: 50%"></td>
-                            <td style="">Periode: {{Carbon\Carbon::now()->format("m/Y")}}</td>
                         </tr>
                         <tr>
-                            <td>PT</td>
+                            <td width="15%">PT</td>
                             <td>: {{$u->nama_pt}}</td>
                         </tr>
                         <tr>
-                            <td>DIVISI</td>
+                            <td width="15%">DIVISI</td>
                             <td>: {{$u->divisi}}</td>
                         </tr>
                         <tr>
-                            <td>JENIS KELAMIN</td>
+                            <td width="15%">JENIS KELAMIN</td>
                             <td style="text-transform: uppercase">: {{$u->jk}}</td>
                         </tr>
                     </tbody>
@@ -65,36 +64,38 @@
             </div>
         </div>
         <br>
-        <br>
 
-        <table id="customers" style="font-size: 10px;">
+        <table id="customers" style="font-size: 12px;">
             <thead>
                 <tr>
-                    <th>Hari</th>
-                    <th>Tanggal</th>
-                    <th>Dari Jam</th>
-                    <th>Sampai Jam</th>
-                    <th>Keterangan</th>
-                    <th>Status</th>
+                    <th style="text-align: center">Hari</th>
+                    <th style="text-align: center">Tanggal</th>
+                    <th style="text-align: center">Dari Jam</th>
+                    <th style="text-align: center">Sampai Jam</th>
+                    <th style="text-align: center">Keterangan</th>
+                    <th style="text-align: center">Status</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($suratIzin as $s)
                     @if ($s->status == 1 || $s->status == 2)
-                        <tr>
-                            <td>Alfreds Futterkiste</td>
-                            <td>{{ date('d/m/Y', strtotime($s->tanggal_izin))}}</td>
-                            <td class="text-center">{{ date('H:i', strtotime($s->jam_mulai))}}</td>
-                            <td class="text-center">{{ date('H:i', strtotime($s->jam_akhir))}}</td>
-                            <td>{{$s->keterangan_izin}}</td>
-                            <td>
-                                @if($s->status == 1)
-                                    approved
-                                @else
-                                    rejected
-                                @endif
-                            </td>
-                        </tr>
+                        @if (date('m/Y', strtotime($s->tanggal_izin)) == $thisMonth)
+                            <tr>
+                                {{-- <td>{{ date('l', strtotime($s->tanggal_izin))}}</td> --}}
+                                <td>{{ Carbon\Carbon::parse($s->tanggal_izin)->translatedFormat('l')}}</td>
+                                <td>{{ date('d/m/Y', strtotime($s->tanggal_izin))}}</td>
+                                <td class="text-center">{{ date('H:i', strtotime($s->jam_mulai))}}</td>
+                                <td class="text-center">{{ date('H:i', strtotime($s->jam_akhir))}}</td>
+                                <td>{{$s->keterangan_izin}}</td>
+                                <td style="text-align: center">
+                                    @if($s->status == 1)
+                                        approved
+                                    @else
+                                        rejected
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     @endif
                 @endforeach
             </tbody>
