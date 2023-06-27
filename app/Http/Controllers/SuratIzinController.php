@@ -14,4 +14,11 @@ class SuratIzinController extends Controller
 
         return view('update-surat-izin', $data);
     }
+
+    public function deleteSuratIzin($id) {
+        SuratIzin::where('id', $id)->delete();
+
+        toast('Data berhasil diunsend.','success');
+        return redirect('surat-izin');
+    }
 }

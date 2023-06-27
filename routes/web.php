@@ -32,6 +32,9 @@ Route::post('register', [AuthController::class, 'registerAction']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout']);
+    Route::get('profile', [UserController::class, 'profile']);
+    Route::get('ubah/password', [UserController::class, 'ubahPassword']);
+    Route::post('ubah/password', [UserController::class, 'ubahPasswordAction']);
     
     Route::middleware(['role:1'])->group(function () {
 
@@ -54,12 +57,14 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('users/{id}', [UserController::class, 'destroy'])->name('users.delete');
 
     
-    Route::middleware(['role:2'])->group(function () {
+    Route::middleware(['userAtasan'])->group(function () {
         Route::get('surat-izin', [AdminController::class, 'suratIzin']);
         Route::get('form-izin', [AdminController::class, 'formIzin']);
         Route::post('form-izin', [AdminController::class, 'formIzinAction']);
         Route::get('cetak-pdf', [PdfController::class, 'cetakPDF']);
         Route::get('surat-izin/ubah/{id}', [SuratIzinController::class, 'update']);
+        Route::delete('delete/surat-izin/{id}', [SuratIzinController::class, 'deleteSuratIzin']);
+
     });
 
     Route::middleware(['role:3'])->group(function () {
@@ -68,6 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('surat-izin/reject/{id}', [AtasanController::class, 'reject']);
         Route::post('surat-izin/pending/{id}', [AtasanController::class, 'pending']);
         Route::get('daftar-surat-izin/ubah/{id}', [AtasanController::class, 'ubah']);
+        
     });
 
     

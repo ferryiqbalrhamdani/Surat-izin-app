@@ -10,11 +10,12 @@
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="{{asset('vendor/sb-admin/css/styles.css')}}" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="sb-nav-fixed" style="background: #F6F9FF;">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
+            <a class="navbar-brand ps-3" href="#">APP Surat Izin</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -29,7 +30,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                        <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="/logout"><i class="fas fa-right-from-bracket"></i> Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -50,34 +53,66 @@
 
                             <div class="sb-sidenav-menu-heading">Interface</div>
 
+                            
+
                             @if (Auth::user()->role_id == 3)
-                                <a  @if(request()->route()->uri == 'daftar-surat-izin') class="nav-link  active" @else class="nav-link" @endif href="/daftar-surat-izin">
+                                <a  @if(request()->route()->uri == 'daftar-surat-izin' || request()->route()->uri == 'daftar-surat-izin/ubah/{id}') class="nav-link  active" @else class="nav-link" @endif href="/daftar-surat-izin">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                                    Daftar Surat Izin <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>
+                                    Daftar Izin <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>
+                                </a>
+                                <a  @if(request()->route()->uri == 'daftar-lembur' || request()->route()->uri == 'daftar-lembur/ubah/{id}') class="nav-link  active" @else class="nav-link" @endif href="/daftar-surat-izin">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                                    Daftar Lembur <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>
                                 </a>
                                 
                             @endif
-
-                                <a @if(request()->route()->uri == 'surat-izin') class="nav-link active" @else class="nav-link" @endif href="/surat-izin">
-                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            @if (Auth::user()->role_id == 2 || Auth::user()->role_id ==3)
+                                <a @if(request()->route()->uri == 'surat-izin' || request()->route()->uri == 'form-izin') class="nav-link active" @else class="nav-link" @endif href="/surat-izin">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-envelope-open-text"></i></div>
                                     Surat Izin
                                 </a>
+                            @endif
+                            @if(Auth::user()->role_id == 2)
+                                <a @if(request()->route()->uri == 'surat-lembur') class="nav-link active" @else class="nav-link" @endif href="/surat-izin">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-envelope-open-text"></i></div>
+                                    Surat Lembur
+                                </a>
+                            @endif
+                            <a  @if(request()->route()->uri == 'profile' || request()->route()->uri == 'ubah/password') class="nav-link  active" @else class="nav-link" @endif href="/profile">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-user"></i></div>
+                                    Profile <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>
+                            </a>
                             
                             @if (Auth::user()->role_id == 1)
 
                             <a @if(request()->route()->uri == 'users') class="nav-link active" @else class="nav-link" @endif href="/users">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                                 Daftar User
                             </a>
+                            @endif
+                            @if(Auth::user()->role_id != 2)
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fa-solid fa-database"></i></div>
+                                Data
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">Izin</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Lembur</a>
+                                </nav>
+                            </div>
+                            @endif
                             
-
+                            
+                            @if (Auth::user()->role_id == 1)
                             <div class="sb-sidenav-menu-heading">Addons</div>
                             <a @if(request()->route()->uri == 'daftar-pt') class="nav-link active" @else class="nav-link" @endif href="/daftar-pt">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
                                 Daftar PT
                             </a>
                             <a @if(request()->route()->uri == 'daftar-divisi') class="nav-link active" @else class="nav-link" @endif href="/daftar-divisi">
-                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                <div class="sb-nav-link-icon"><i class="fas fa-folder"></i></div>
                                 Daftar Divisi
                             </a>
 
@@ -118,5 +153,9 @@
         <script src="{{asset('vendor/sb-admin/assets/demo/chart-bar-demo.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="{{asset('vendor/sb-admin/js/datatables-simple-demo.js')}}"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        @stack('formConfirmDeleteDaftarPT')
+        @stack('suratIzinRadio')
+        @stack('ubahPassword')
     </body>
 </html>

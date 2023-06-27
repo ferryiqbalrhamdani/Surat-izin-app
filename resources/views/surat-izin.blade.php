@@ -19,15 +19,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-md-6">
-                <div class="card bg-danger text-white mb-4">
-                    <div class="card-body">Form Lembur</div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
-                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
 
         <div class="card mb-4 shadow">
@@ -40,7 +32,7 @@
                     <div class="col d-flex justify-content-end">
                         <!-- Button trigger modal -->
                         <a href="/cetak-pdf" target="_blank" class="btn btn-success btn-sm">
-                            Download data bulan ini
+                            <i class="fa-solid fa-download"></i> Download data bulan ini
                         </a>
                     </div>
                 </div>
@@ -64,7 +56,13 @@
                                 <tr>
                                     <td>{{date('d/m/Y', strtotime($s->tanggal_izin)) }}</td>
                                     <td>{{date('H:i', strtotime($s->jam_mulai)) }}</td>
-                                    <td>{{date('H:i', strtotime($s->jam_akhir)) }}</td>
+                                    <td>
+                                        @if($s->jam_akhir != null)
+                                            {{date('H:i', strtotime($s->jam_akhir)) }}
+                                        @else 
+                                            -
+                                        @endif
+                                    </td>
                                     <td>{{$s->keterangan_izin}}</td>
                                     <td>
                                         @if($s->status == 0)
@@ -77,11 +75,20 @@
                                     </td>
                                     <td>
                                         @if($s->status == 0)
-                                            <a href="/surat-izin/ubah/{{$s->id}}" class="btn btn-sm btn-primary">Ubah</a>
-                                            <a href="" class="btn btn-sm btn-danger">Hapus</a>
+                                            <a href="/ubah/pt/{{$s->id}}" class="btn btn-primary btn-sm" data-toggle="tooltip" title='View'>
+                                                <i class="fa-solid fa-eye"></i>
+                                            </a>
+                                            <form action="/delete/surat-izin/{{$s->id}}" method="POST" style="display: inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input name="_method" type="hidden" value="DELETE">
+                                                <button type="submit" onclick="return(confirm('apakah anda yakin ingin unsend surat izin ini?'))" class="btn  btn-danger btn-sm btn-flat " data-toggle="tooltip" title='Unsend'>
+                                                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                                                </button>
+                                            </form>
                                         @endif
                                         @if($s->status == 1)
-                                            <a href="/cetak-pdf" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
+                                            <a href="/cetak-pdf/{{$s->id}}" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
                                         @endif
                                     </td>
                                 </tr>

@@ -63,9 +63,9 @@
                 </table>
             </div>
         </div>
-        <br>
-
-        <table id="customers" style="font-size: 12px;">
+        
+        <p style="font-size: 12px; text-align: right">Total Data: {{$countData}}</p>
+        <table id="customers" style="font-size: 12px; margin-bottom: 30px">
             <thead>
                 <tr>
                     <th style="text-align: center">Hari</th>
@@ -73,25 +73,31 @@
                     <th style="text-align: center">Dari Jam</th>
                     <th style="text-align: center">Sampai Jam</th>
                     <th style="text-align: center">Keterangan</th>
-                    <th style="text-align: center">Status</th>
+                    <th style="text-align: center">Kategori</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($suratIzin as $s)
                     @if ($s->status == 1 || $s->status == 2)
                         @if (date('m/Y', strtotime($s->tanggal_izin)) == $thisMonth)
-                            <tr>
+                            <tr @if($s->status == 2) style="color: red" @endif>
                                 {{-- <td>{{ date('l', strtotime($s->tanggal_izin))}}</td> --}}
                                 <td>{{ Carbon\Carbon::parse($s->tanggal_izin)->translatedFormat('l')}}</td>
                                 <td>{{ date('d/m/Y', strtotime($s->tanggal_izin))}}</td>
                                 <td class="text-center">{{ date('H:i', strtotime($s->jam_mulai))}}</td>
-                                <td class="text-center">{{ date('H:i', strtotime($s->jam_akhir))}}</td>
+                                <td class="text-center">
+                                    @if($s->jam_akhir != null)
+                                        {{ date('H:i', strtotime($s->jam_akhir))}}
+                                    @else
+                                        -
+                                    @endif
+                                </td>
                                 <td>{{$s->keterangan_izin}}</td>
                                 <td style="text-align: center">
-                                    @if($s->status == 1)
-                                        approved
+                                    @if($s->jam_akhir != null)
+                                        IMK
                                     @else
-                                        rejected
+                                        TMK
                                     @endif
                                 </td>
                             </tr>
@@ -101,5 +107,9 @@
             </tbody>
         </table>
     @endforeach
+    <div style="font-size: 12px; margin-top: -20px">
+        <p><span style="margin-right: 20px">Catatan</span> : Jika terdapat warna<span style="color: red"> merah</span>, artinya tidak disetujui </p>
+        <p style="margin-top: -8px">Keterangan : IMK adalah <b>(Izin Meninggalkan Kantor)</b>, TMK adalah <b>(Telat Masuk Kantor)</b></p>
+    </div>
 </body>
 </html>

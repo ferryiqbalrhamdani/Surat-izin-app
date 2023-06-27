@@ -64,6 +64,12 @@ class AdminController extends Controller
     }
 
     public function formIzinAction(Request $request) {
+        // dd($request->check);
+        if($request->check == 'p') {
+            $rule = 'required';
+        } else {
+            $rule = '';
+        }
         $request->validate([
             'nama_user' => 'required',
             'nama_pt' => 'required',
@@ -71,7 +77,7 @@ class AdminController extends Controller
             'divisi_user' => 'required',
             'tanggal_izin' => 'required',
             'jam_mulai' => 'required',
-            'jam_akhir' => 'required',
+            'jam_akhir' => $rule,
             'keterangan_izin' => 'required',
         ], [
             'tanggal_izin.required' => 'Tanggal izin wajib diisi!',
@@ -80,6 +86,13 @@ class AdminController extends Controller
             'keterangan_izin.required' => 'Keterangan izin wajib diisi!',
         ]);
         // dd($request->all());
+        if($request->check == 'p') {
+            $jamKeluar = $request->jam_akhir;
+        } else {
+            $jamKeluar = null;
+        }
+
+        // dd($jamKeluar);
         SuratIzin::create([
             'nama_user' => $request->nama_user,
             'nama_pt' => $request->nama_pt,
@@ -87,7 +100,7 @@ class AdminController extends Controller
             'divisi_user' => $request->divisi_user,
             'tanggal_izin' => $request->tanggal_izin,
             'jam_mulai' => $request->jam_mulai,
-            'jam_akhir' => $request->jam_akhir,
+            'jam_akhir' => $jamKeluar,
             'keterangan_izin' => $request->keterangan_izin,
         ]);
 
@@ -109,6 +122,20 @@ class AdminController extends Controller
         
 
         return view('ubah-pt', $data);
+    }
+
+    public function updatePTAction(Request $request, $id) {
+        $request->validate([
+            'name' => 'required'
+        ], [
+            'name.required' => 'Kolom Nama PT wajib diisi!'
+        ]);
+        DaftarPT::where('id', $id)->update([
+            'name' => $request->name
+        ]);
+
+        toast('Data berhasil dihapus.','success');
+        return redirect('daftar-pt');
     }
 
 

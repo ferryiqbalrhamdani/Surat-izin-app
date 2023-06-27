@@ -2,22 +2,11 @@
 @section('content')
     
 
-        <div class="row">
-            <div class="col">
-                <div class="d-flex justify-content-between mt-4">
-                    <h1 class="">{{$title}}</h1>
-                </div>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item active">{{$title}}</li>
-                </ol>
-            </div>
-            <div class="col text-end">
-                <a href="/surat-izin" class=" btn btn-primary mt-4" ><i class="fa fa-arrow-left"></i> Kembali</a>
-
-            </div>
-        </div>
-
-
+    
+        <h1 class="mt-4">{{$title}}</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">{{$title}}</li>
+        </ol>
         
         
         <div class="row d-flex justify-content-center">
@@ -59,21 +48,6 @@
                                         <span class="text-danger">{{ $errors->first('tanggal_izin') }}</span>
                                     @endif
                                 </div>
-                                <div class="mb-3">
-                                    <label for="kategori" class="form-label">Kategori</label>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="check" value="p telat" id="perempuanhijab">
-                                        <label class="form-check-label" for="perempuanhijab">
-                                            Izin Telat
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="check" id="perempuan" value="p" checked>
-                                        <label class="form-check-label" for="perempuan">
-                                            Meninggalkan Kantor
-                                        </label>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-3">
@@ -84,7 +58,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="desc col-lg-6" id="Pilihp">
+                                    <div class="col-lg-6">
                                         <div class="mb-3">
                                             <label for="jam_akhir" class="form-label">Jam Keluar</label>
                                             <input type="time" id="jam_akhir" name="jam_akhir" value="{{old('jam_akhir')}}" class="form-control">
@@ -104,7 +78,7 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button class="btn btn-primary form-control"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                            <button class="btn btn-primary form-control">Simpan</button>
 
                         </div>
                     </form>
@@ -114,18 +88,3 @@
 
         
     @endsection
-    @push('suratIzinRadio')
-        <script>
-            $(document).ready(function() {
-                $("input[name$='check']").click(function() {
-                    var test = $(this).val();
-
-                    // console.log(test);
-
-                    $("div.desc").hide();
-                    $("#Pilih" + test).show();
-                });
-            });
-
-    </script>
-    @endpush

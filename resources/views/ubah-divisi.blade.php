@@ -34,7 +34,7 @@
                                 <button class="btn btn-primary form-control">Simpan</button>
                             </div>
                             <div class="text-center">
-                                <a href="/daftar-pt" class="text-center">Kembali</a>
+                                <a href="/daftar-divisi" class="text-center">Kembali</a>
                             </div>
                         </div>
                     </form>

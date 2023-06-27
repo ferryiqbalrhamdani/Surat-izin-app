@@ -8,6 +8,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -16,13 +17,18 @@ class PdfController extends Controller
         $atasan = User::where('role_id', 3)->get();
         $suratIzin = SuratIzin::where('username_user', Auth::user()->username)->orderBy('tanggal_izin', 'asc')->get();
         $thisMonth = Carbon::now()->format('m/Y');
-        // $thisMonth = '05/2023';
+
+        $countData1 = SuratIzin::where('username_user', Auth::user()->username)->where('status', 1)->whereMonth('tanggal_izin', Carbon::now()->month)->count();
+        $countData2 = SuratIzin::where('username_user', Auth::user()->username)->where('status', 2)->whereMonth('tanggal_izin', Carbon::now()->month)->count();
+        
+        $countData = $countData1 + $countData2;
 
         $data = [
             'user' => $user,
             'atasan' => $atasan,
             'suratIzin' => $suratIzin,
             'thisMonth' => $thisMonth,
+            'countData' => $countData
         ];
 
         // dd($data);

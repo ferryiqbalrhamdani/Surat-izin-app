@@ -4,7 +4,7 @@
 
         <div class="d-flex justify-content-between">
             <h1 class="mt-4">{{$title}}</h1>
-            <a href="/daftar-surat-izin" class="btn btn-primary mt-4 mb-4">Kembali</a>
+            <a href="/daftar-surat-izin" class="btn btn-primary mt-4 mb-4"><i class="fa fa-arrow-left"></i> Kembali</a>
 
         </div>
         <ol class="breadcrumb mb-4">
@@ -37,6 +37,10 @@
                             <label for="tanggal_izin" class="form-label">Tanggal Izin</label>
                             <input type="text" id="tanggal_izin" value="{{date('d/m/Y', strtotime($s->tanggal_izin)) }}" readonly name="tanggal_izin" class="form-control">
                         </div>
+                        <div class="mb-3">
+                            <label for="kategori" class="form-label">Kategori</label>
+                            <input type="text" value="@if($s->jam_akhir != null ) Izin Meninggalkan Kantor @else Izin Terlambat @endif" name="kategori" id="kategori" readonly class="form-control">
+                        </div>
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="mb-3">
@@ -47,7 +51,7 @@
                             <div class="col-lg-6">
                                 <div class="mb-3">
                                     <label for="jam_akhir" class="form-label">Jam Keluar</label>
-                                    <input type="text" id="jam_akhir" name="jam_akhir" readonly value="{{date('H:i', strtotime($s->jam_akhir)) }}" class="form-control">
+                                    <input type="text" id="jam_akhir" name="jam_akhir" readonly value="@if($s->jam_akhir != null ){{date('H:i', strtotime($s->jam_akhir))  }} @else - @endif" class="form-control">
                                 </div>
                             </div>
                         </div>

@@ -13,7 +13,7 @@
             <div class="col-xl-5 col-md-7">
                 <div class="card shadow">
                     <div class="card-header">
-                        <h3 class="text-center">Input Form Izin</h3>
+                        <h3 class="text-center">Form Ubah PT</h3>
                     </div>
                     <form action="" method="POST">
                         @csrf
