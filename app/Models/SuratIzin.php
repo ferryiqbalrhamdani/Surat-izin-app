@@ -21,5 +21,6 @@ class SuratIzin extends Model
         'jam_mulai',
         'jam_akhir',
         'status',
+        'role_id',
     ];
 }

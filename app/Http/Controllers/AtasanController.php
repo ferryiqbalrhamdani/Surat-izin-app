@@ -11,6 +11,7 @@ class AtasanController extends Controller
         $data['title'] = 'Daftar Surat Izin';
         $data['suratIzin'] = SuratIzin::orderBy('created_at', 'desc')->get();
         $data['countSuratIzin'] = SuratIzin::where('status', 0)->count();
+        $data['countSuratIzinHRD'] = SuratIzin::where('status_hrd', 0)->count();
         $data['countSuratIzinAll'] = SuratIzin::count();
 
         return view('atasan.index', $data);

@@ -55,7 +55,7 @@
 
                             
 
-                            @if (Auth::user()->role_id == 3)
+                            @if (Auth::user()->role_id == 3 || Auth::user()->role_id == 4)
                                 <a  @if(request()->route()->uri == 'daftar-surat-izin' || request()->route()->uri == 'daftar-surat-izin/ubah/{id}') class="nav-link  active" @else class="nav-link" @endif href="/daftar-surat-izin">
                                     <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
                                     Daftar Izin <span class="badge text-bg-secondary" style="margin-left: 30px;"></span>

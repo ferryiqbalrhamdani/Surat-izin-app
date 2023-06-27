@@ -6,6 +6,7 @@ use App\Models\DaftarDivisi;
 use App\Models\DaftarPT;
 use App\Models\SuratIzin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -92,17 +93,35 @@ class AdminController extends Controller
             $jamKeluar = null;
         }
 
+        if(Auth::user()->role_id == 2) {
+            SuratIzin::create([
+                'nama_user' => $request->nama_user,
+                'nama_pt' => $request->nama_pt,
+                'username_user' => $request->username_user,
+                'divisi_user' => $request->divisi_user,
+                'tanggal_izin' => $request->tanggal_izin,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_akhir' => $jamKeluar,
+                'keterangan_izin' => $request->keterangan_izin,
+                'role_id' => Auth::user()->role_id
+            ]);
+        } elseif(Auth::user()->role_id == 3) {
+            SuratIzin::create([
+                'nama_user' => $request->nama_user,
+                'nama_pt' => $request->nama_pt,
+                'username_user' => $request->username_user,
+                'divisi_user' => $request->divisi_user,
+                'tanggal_izin' => $request->tanggal_izin,
+                'jam_mulai' => $request->jam_mulai,
+                'jam_akhir' => $jamKeluar,
+                'keterangan_izin' => $request->keterangan_izin,
+                'status' => 1,
+                'role_id' => Auth::user()->role_id
+            ]);
+        }
+
         // dd($jamKeluar);
-        SuratIzin::create([
-            'nama_user' => $request->nama_user,
-            'nama_pt' => $request->nama_pt,
-            'username_user' => $request->username_user,
-            'divisi_user' => $request->divisi_user,
-            'tanggal_izin' => $request->tanggal_izin,
-            'jam_mulai' => $request->jam_mulai,
-            'jam_akhir' => $jamKeluar,
-            'keterangan_izin' => $request->keterangan_izin,
-        ]);
+        
 
         toast('Berhasil disimpan.','success');
         return redirect('surat-izin');

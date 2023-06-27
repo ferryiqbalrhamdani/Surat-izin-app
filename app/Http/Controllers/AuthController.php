@@ -45,7 +45,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->role_id == 4) {
-                return redirect('hrd-daftar-surat-izin');
+                return redirect('daftar-surat-izin');
             }
         }
         Alert::error('Gagal login', 'Username atau password salah.');

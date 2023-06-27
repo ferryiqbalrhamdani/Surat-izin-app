@@ -67,7 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
     });
 
-    Route::middleware(['role:3'])->group(function () {
+    Route::middleware(['atasanHRD'])->group(function () {
         Route::get('daftar-surat-izin', [AtasanController::class, 'index']);
         Route::post('surat-izin/approved/{id}', [AtasanController::class, 'approved']);
         Route::post('surat-izin/reject/{id}', [AtasanController::class, 'reject']);

@@ -65,30 +65,59 @@
                                     </td>
                                     <td>{{$s->keterangan_izin}}</td>
                                     <td>
-                                        @if($s->status == 0)
-                                            <span class="badge rounded-pill text-bg-warning">proccess</span>
-                                        @elseif($s->status == 1)
-                                            <span class="badge rounded-pill text-bg-success">success</span>
-                                        @elseif($s->status == 2)
-                                            <span class="badge rounded-pill text-bg-danger">failed</span>
+                                        @if(Auth::user()->role_id == 2)
+                                            @if($s->status == 0)
+                                                <span class="badge rounded-pill text-bg-warning">proccess</span>
+                                            @elseif($s->status == 1)
+                                                <span class="badge rounded-pill text-bg-success">success</span>
+                                            @elseif($s->status == 2)
+                                                <span class="badge rounded-pill text-bg-danger">failed</span>
+                                            @endif
+                                        @elseif(Auth::user()->role_id == 3)
+                                            @if($s->status_hrd == 0)
+                                                <span class="badge rounded-pill text-bg-warning">proccess</span>
+                                            @elseif($s->status_hrd == 1)
+                                                <span class="badge rounded-pill text-bg-success">success</span>
+                                            @elseif($s->status_hrd == 2)
+                                                <span class="badge rounded-pill text-bg-danger">failed</span>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
-                                        @if($s->status == 0)
-                                            <a href="/ubah/pt/{{$s->id}}" class="btn btn-primary btn-sm" data-toggle="tooltip" title='View'>
-                                                <i class="fa-solid fa-eye"></i>
-                                            </a>
-                                            <form action="/delete/surat-izin/{{$s->id}}" method="POST" style="display: inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input name="_method" type="hidden" value="DELETE">
-                                                <button type="submit" onclick="return(confirm('apakah anda yakin ingin unsend surat izin ini?'))" class="btn  btn-danger btn-sm btn-flat " data-toggle="tooltip" title='Unsend'>
-                                                    <i class="fa-solid fa-arrow-rotate-left"></i>
-                                                </button>
-                                            </form>
-                                        @endif
-                                        @if($s->status == 1)
-                                            <a href="/cetak-pdf/{{$s->id}}" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
+                                        @if(Auth::user()->role_id == 2)
+                                            @if($s->status == 0)
+                                                <a href="/ubah/pt/{{$s->id}}" class="btn btn-primary btn-sm" data-toggle="tooltip" title='View'>
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
+                                                <form action="/delete/surat-izin/{{$s->id}}" method="POST" style="display: inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" onclick="return(confirm('apakah anda yakin ingin unsend surat izin ini?'))" class="btn  btn-danger btn-sm btn-flat " data-toggle="tooltip" title='Unsend'>
+                                                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            @if($s->status == 1)
+                                                <a href="/cetak-pdf/{{$s->id}}" @if($s->status == 0 || $s->status == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success">Download</a>
+                                            @endif
+                                        @elseif(Auth::user()->role_id == 3)
+                                            @if($s->status_hrd == 0)
+                                                <a href="/ubah/pt/{{$s->id}}" class="btn btn-primary btn-sm" data-toggle="tooltip" title='View'>
+                                                    <i class="fa-solid fa-eye"></i>
+                                                </a>
+                                                <form action="/delete/surat-izin/{{$s->id}}" method="POST" style="display: inline-block">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" onclick="return(confirm('apakah anda yakin ingin unsend surat izin ini?'))" class="btn  btn-danger btn-sm btn-flat " data-toggle="tooltip" title='Unsend'>
+                                                        <i class="fa-solid fa-arrow-rotate-left"></i>
+                                                    </button>
+                                                </form>
+                                            @endif
+                                            @if($s->status_hrd == 1)
+                                                <a href="/cetak-pdf/{{$s->id}}" @if($s->status_hrd == 0 || $s->status_hrd == 2) style="pointer-events: none" @endif target="_blank" class="btn btn-sm btn-success" data-toggle="tooltip" title='Download PDF'><i class="fa-solid fa-download"></i></a>
+                                            @endif
                                         @endif
                                     </td>
                                 </tr>
